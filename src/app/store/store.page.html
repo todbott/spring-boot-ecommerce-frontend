@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Store: 
+      <ng-container *ngIf="environment.loggedIn; else loggedOut">
+        <span style="color: green; font-size: smaller;">logged in
+        </span>
+      </ng-container>
+      <ng-template #loggedOut>
+        <span style="color: red; font-size: smaller;">not logged in</span>
+      </ng-template>
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-margin">
+  <ion-grid class="ion-margin">
+  </ion-grid>
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col>Info</ion-col>
+      <ion-col>Add to cart</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let i of environment.itemsAsKeyValue">
+      <ion-col><b>Name: </b>{{i.name}}
+      <br><b>Info: </b>{{i.description}}
+      <br><img src="data:image/png;base64,{{i.picture}}"></ion-col>
+      <ion-col><b>Price: </b>{{i.price}}
+      <br>
+      <br><ion-button (click)='addToCart(i.id)'>Add to cart</ion-button></ion-col>
+      </ion-row>
+</ion-grid>
+</ion-content>

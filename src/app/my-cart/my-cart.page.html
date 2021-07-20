@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Cart: 
+      <ng-container *ngIf="environment.loggedIn; else loggedOut">
+        <span style="color: green; font-size: smaller;">logged in
+        </span>
+      </ng-container>
+      <ng-template #loggedOut>
+        <span style="color: red; font-size: smaller;">not logged in</span>
+      </ng-template>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-margin">
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col>Name</ion-col>
+      <ion-col>Price</ion-col>
+      <ion-col>Remove from  cart</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let i of items">
+        <ion-col>{{i.name}}</ion-col>
+        <ion-col>${{i.price}}</ion-col>
+        <ion-col><ion-button (click)='removeFromCart(i.id)'>Remove</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-content>
+
+  <ng-container *ngIf="itemsExist">
+  <ion-content class="ion-margin">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col>Total:</ion-col>
+        <ion-col>Place order</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>${{orderTotal}}</ion-col>
+        <ion-col><ion-button (click)='placeOrder()'>Place order</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>

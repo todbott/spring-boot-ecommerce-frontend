@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://analog-context-251208.uc.r.appspot.com',
+  username: null,
+  token: null,
+  items: null,
+  filteredItems: null,
+
+  itemsAsKeyValue: [],
+  filteredItemsAsKeyValue: [],
+
+  inCart: [],
+
+  loggedIn: false
 };
 
 /*

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Login: 
+      <ng-container *ngIf="environment.loggedIn; else loggedOut">
+        <span style="color: green; font-size: smaller;">logged in
+        </span>
+      </ng-container>
+      <ng-template #loggedOut>
+        <span style="color: red; font-size: smaller;">not logged in</span>
+      </ng-template>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content> 
+  <div class="container">
+      <ion-grid>
+          <ion-row class="no-borders"></ion-row>
+          <ion-row class="no-borders">
+              <ion-col class="no-borders" size="10"  offset="1">
+                  <img src="../../assets/spring.png"/>
+                  <form (ngSubmit)="submit()" [formGroup]="form">
+                      <div class="form-item">
+                          <p class="input-label">Username</p>
+                          <div class="input-container">
+                              <ion-input type="text" formControlName="email"></ion-input>
+                          </div>
+                          <div class="error-container" *ngIf="form.get('email').invalid && form.get('email').touched">
+                              <p *ngIf="form.get('email').errors.required">Enter your username</p>
+                              <p *ngIf="form.get('email').errors.email">Enter a valid email address</p>
+                          </div>
+                      </div>
+                      <div class="form-item">
+                          <p class="input-label">Password</p>
+                          <div class="input-container">
+                              <ion-input [type]="passwordInputType" formControlName="password"></ion-input>
+                              <ion-icon name="eye-outline" *ngIf="!showPassword; else show" (click)="isShowPassword()"></ion-icon>
+                              <ng-template #show>
+                                  <ion-icon name="eye-off-outline" (click)="isShowPassword()"></ion-icon>
+                              </ng-template>
+                          </div>
+                          <div class="error-container" *ngIf="errorMessage">
+                              <p>{{errorMessage}}</p>
+                          </div>
+                      </div>
+                      <ion-button
+                          type="submit"
+                          expand="block"
+                          [disabled]="form.invalid"
+                      >Login</ion-button>
+                  </form>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </div>
+</ion-content>

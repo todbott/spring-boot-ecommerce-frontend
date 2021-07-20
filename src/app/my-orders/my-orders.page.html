@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Orders: 
+      <ng-container *ngIf="environment.loggedIn; else loggedOut">
+        <span style="color: green; font-size: smaller;">logged in
+        </span>
+      </ng-container>
+      <ng-template #loggedOut>
+        <span style="color: red; font-size: smaller;">not logged in</span>
+      </ng-template>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ng-container *ngIf="itemsExist">
+<ion-content class="ion-margin">
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col>Name</ion-col>
+      <ion-col>Price</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let i of items">
+        <ion-col>{{i.name}}</ion-col>
+        <ion-col>${{i.price}}</ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-content>
+

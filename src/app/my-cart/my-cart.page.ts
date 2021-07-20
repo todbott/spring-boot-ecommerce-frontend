@@ -33,6 +33,9 @@ export class MyCartPage implements OnInit {
 
   async ionViewWillEnter() {
 
+    this.itemsExist = false;
+    this.items = [];
+
     this.environment = environment;
     this.orderTotal = 0.00;
 
@@ -64,17 +67,23 @@ export class MyCartPage implements OnInit {
       this.items = environment.inCart
     }
 
+    if (this.items.length > 0) {
+      this.itemsExist = true;
+    }
+
 }
 
 
   
 
   async removeFromCart(id) {
+    console.log(this.items)
     for (var i=0; i < this.items.length; i++) {
       if (this.items[i]['id'] == id) {
         this.items.splice(i, 1)
       }
     }
+    console.log(this.items)
 
 
     if (this.environment.loggedIn == true) {
@@ -85,11 +94,12 @@ export class MyCartPage implements OnInit {
       )
     }
 
-    if (this.items.length = 0) {
+    if (this.items.length == 0) {
       this.itemsExist = false;
     }
     await this.showAlert("Item has been removed from your cart.")
     environment.inCart = this.items;
+    console.log(environment.inCart)
     this.router.navigateByUrl('store')
  }
 

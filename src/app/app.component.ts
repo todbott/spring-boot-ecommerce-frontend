@@ -12,11 +12,11 @@ import { AppServiceService } from './app-service.service';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Login', url: '/login', icon: 'paper-plane' },
-    { title: 'Store', url: '/store', icon: 'mail' },
-    { title: 'Search', url: '/search', icon: 'paper-plane' },
-    { title: 'My cart', url: '/my-cart', icon: 'heart' },
-    { title: 'My orders', url: '/my-orders', icon: 'paper-plane' },
+    { title: 'Login', url: '/login', icon: 'log-in' },
+    { title: 'Store', url: '/store', icon: 'storefront' },
+    { title: 'Search', url: '/search', icon: 'search' },
+    { title: 'My cart', url: '/my-cart', icon: 'cart' },
+    { title: 'My orders', url: '/my-orders', icon: 'book' },
   ];
 
   private loader;

@@ -16,6 +16,7 @@
 </ion-header>
 
 <ion-content class="ion-margin">
+  <ng-container *ngIf="itemsExist; else noItems">
   <ion-grid class="ion-margin">
     <ion-row>
       <ion-col>Name</ion-col>
@@ -28,10 +29,8 @@
         <ion-col><ion-button (click)='removeFromCart(i.id)'>Remove</ion-button></ion-col>
     </ion-row>
   </ion-grid>
-  </ion-content>
 
-  <ng-container *ngIf="itemsExist">
-  <ion-content class="ion-margin">
+    <ng-container *ngIf="environment.loggedIn">
     <ion-grid class="ion-margin">
       <ion-row>
         <ion-col>Total:</ion-col>
@@ -42,5 +41,12 @@
         <ion-col><ion-button (click)='placeOrder()'>Place order</ion-button></ion-col>
       </ion-row>
     </ion-grid>
+    </ng-container>
+  </ng-container>
+    <ng-template #noItems>
+      <div class="ion-margin">
+        No items in cart
+      </div>
+    </ng-template>
 
 </ion-content>

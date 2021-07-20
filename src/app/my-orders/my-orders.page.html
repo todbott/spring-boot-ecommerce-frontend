@@ -15,7 +15,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ng-container *ngIf="itemsExist">
+<ng-container *ngIf="itemsExist; else noItems">
 <ion-content class="ion-margin">
   <ion-grid class="ion-margin">
     <ion-row>
@@ -28,4 +28,16 @@
     </ion-row>
   </ion-grid>
   </ion-content>
+</ng-container>
+<ng-template #noItems>
+  <ion-content>
+    <ion-grid class="ion-margin">
+      <ion-row></ion-row>
+      <ion-row>
+        <ion-col>Please log in to view your orders</ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-content>
+</ng-template>
 

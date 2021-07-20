@@ -25,67 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-// For app pages
 
-ion-grid {
-    --ion-grid-column-padding: 10px;
-    border-collapse: collapse;
-    border-style: hidden;
-    
-    ion-row:first-child {
-      background-color:  #6CB33E;
-      font-weight: bold;
-    }
-    ion-col {
-      border-bottom: 0;
-      border-right: 0;
-    }
-    ion-col:last-child {
-      border-right: 1px solid black;
-    }
-    ion-col:first-child {
-        border-left: 1px solid black;
-    }
-    
-    ion-row {
-      border-bottom: 1px solid black;
-    }
-  }
-  ion-button {
-      font-size: 10px;
-  }
 
-  ion-input {
-    font-size: 16px;
-    margin-top: -3px;
-    --padding-start: 18px;
-    --padding-end: 18px;
-}
 
-.form-item {
-    margin-top: 25px;
-}
 
-.input-label {
-    color: #000;
-    margin: 0 px 5px;
-}
-
-.input-container {
-    height: 35px;
-    border: double 1px transparent;
-    border-radius: 5px;
-    background-image: linear-gradient(white, white), linear-gradient(180deg, #459AE9 0%, #0E0618 100%, #0E0618 100%);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-    line-height: 10px;
-    position: relative;
-}
-
-    ion-input {
-        --padding-end: 45px;
-    }
-
-.no-borders {
-    border: none;
-}

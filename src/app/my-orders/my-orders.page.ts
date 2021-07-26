@@ -10,7 +10,7 @@ import { AppServiceService } from '../app-service.service';
   styleUrls: ['./my-orders.page.scss'],
 })
 export class MyOrdersPage implements OnInit {
-  environment: { production: boolean; apiUrl: string; username: any; token: any; items: any; itemsAsKeyValue: any[]; inCart: any[]; loggedIn: boolean; };
+  public environment;
   
 
   constructor(  
@@ -19,8 +19,8 @@ export class MyOrdersPage implements OnInit {
     private alertCtrl: AlertController
   ) { }
 
-  private items = []
-  private itemsExist = false;
+  public items = []
+  public itemsExist = false;
 
 
 

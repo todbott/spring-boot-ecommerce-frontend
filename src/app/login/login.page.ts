@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   private loader;
   public showPassword = false;
   public passwordInputType = 'password';
-  environment: { production: boolean; apiUrl: string; username: any; token: any; items: any; itemsAsKeyValue: any[]; inCart: any[]; loggedIn: boolean; };
+  public environment;
 
   constructor(
       private router: Router,

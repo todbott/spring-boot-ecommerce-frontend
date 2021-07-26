@@ -11,9 +11,11 @@ import { AppServiceService } from '../app-service.service';
   styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit {
-  environment: { production: boolean; apiUrl: string; username: any; token: any; items: any; itemsAsKeyValue: any[]; inCart: any[]; loggedIn: boolean; };
+
+  public environment;
   form: FormGroup;
   itemsExist: Boolean;
+  public quantities = [];
 
   constructor(
     private appService: AppServiceService,
@@ -40,10 +42,15 @@ export class SearchPage implements OnInit {
 
 
 
-protected async submit() {
+async submit() {
   (await this.appService.getFilteredItems(this.form.value.searchString)).subscribe((result) => {
     environment.filteredItems = result;
     this.appService.getFilteredItemsForDisplay();
+
+    for (var i = 0; i < environment.itemsAsKeyValue.length; i++) {
+      this.quantities.push(environment.itemsAsKeyValue[i]['name'])
+      this.quantities[i] = "1";
+      }
     })
 
     if (environment.filteredItemsAsKeyValue.length == 0) {
@@ -55,32 +62,39 @@ protected async submit() {
 
   
 
-  async addToCart(which) {
+  async addToCart(which, ind) {
     if (this.environment.loggedIn == true) {
-      (await (await this.appService.addItemToCart(which, environment.username)).toPromise()
+      (await (await this.appService.addItemToCart(which, environment.username, this.quantities[ind])).toPromise()
       .then(result => {
         console.log(result)
-        this.showAlert("Item has been added to your cart")
+        this.showAlert("Added to cart")
         })
       )
     } else {
-      for (let key in environment.items) {
-        let value = environment.items[key];
-        if (value['id'] == which) {
-          let itemId = value['id'];
-          let itemName = value['name'];
-          let itemPrice = value[`price`].replace('$', '')
+      this.showAlert("Please log in to add items to your cart")
 
-          let thisItem = {
-              id: itemId,
-              name: itemName,
-              price: itemPrice
-            }
+      // --- The original app allowed users to add items to their cart
+      // --- without logging in, but I deactivated this feature
 
-          environment.inCart.push(thisItem)
-          this.showAlert("Item has been added to your cart")
-        }
-      }
+      // for (let key in environment.items) {
+      //   let value = environment.items[key];
+      //   if (value['name'] == which) {
+      //     let itemId = value['id'];
+      //     let itemName = value['name'];
+      //     let itemPrice = value[`price`].replace('$', '')
+      //     let itemQuantity = this.quantities[ind];
+
+      //     let thisItem = {
+      //         id: itemId,
+      //         name: itemName,
+      //         price: itemPrice,
+      //         quantity: itemQuantity
+      //       }
+
+      //     environment.inCart.push(thisItem)
+      //     this.showAlert("Added to your cart")
+      //   }
+      // }
     }
   }
 

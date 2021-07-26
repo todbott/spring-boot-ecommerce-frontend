@@ -1,4 +1,5 @@
 
+import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -10,9 +11,7 @@ import { AppServiceService } from '../app-service.service';
   templateUrl: './my-cart.page.html',
   styleUrls: ['./my-cart.page.scss'],
 })
-export class MyCartPage implements OnInit {
-  environment: { production: boolean; apiUrl: string; username: any; token: any; items: any; itemsAsKeyValue: any[]; inCart: any[]; loggedIn: boolean; };
-  
+export class MyCartPage implements OnInit {  
 
   constructor(  
     private appService: AppServiceService,
@@ -20,15 +19,18 @@ export class MyCartPage implements OnInit {
     private alertCtrl: AlertController
   ) { }
 
-  private items = []
-  private itemsExist = false;
-  private orderTotal: number;
+  public items = []
+  public itemsExist = false;
+  private orderTotalFloat: number;
+  public orderTotal: String;
+  public environment;
 
 
 
   ngOnInit() {
     this.environment = environment
-    this.orderTotal = 0.00
+    this.orderTotalFloat = 0.00
+    this.orderTotal = ""
   }
 
   async ionViewWillEnter() {
@@ -37,10 +39,10 @@ export class MyCartPage implements OnInit {
     this.items = [];
 
     this.environment = environment;
-    this.orderTotal = 0.00;
+    this.orderTotalFloat = 0.00;
 
     if (this.environment.loggedIn == true) {
-
+    
       (await (await this.appService.getCartItems(environment.username)).toPromise()
       .then(result => {
         console.log(result)
@@ -59,8 +61,9 @@ export class MyCartPage implements OnInit {
 
             this.items.push(thisItem)
             this.itemsExist = true;
-            this.orderTotal += parseFloat(itemPrice);
+            this.orderTotalFloat += parseFloat(itemPrice);
             }
+          this.orderTotal = this.orderTotalFloat.toFixed(2);
         })
       )
     } else {
@@ -76,18 +79,18 @@ export class MyCartPage implements OnInit {
 
   
 
-  async removeFromCart(id) {
-    console.log(this.items)
-    for (var i=0; i < this.items.length; i++) {
-      if (this.items[i]['id'] == id) {
-        this.items.splice(i, 1)
-      }
-    }
-    console.log(this.items)
+  async removeFromCart(itemName, quantity) {
+    // console.log(this.items)
+    // for (var i=0; i < this.items.length; i++) {
+    //   if (this.items[i]['name'] == itemName) {
+    //     this.items.splice(i, 1)
+    //   }
+    // }
+    // console.log(this.items)
 
 
     if (this.environment.loggedIn == true) {
-      (await (await this.appService.deleteItemFromCart(id)).toPromise()
+      (await (await this.appService.deleteItemFromCart(itemName, environment.username, quantity)).toPromise()
       .then(result => {
         console.log(result)
         })
@@ -98,8 +101,8 @@ export class MyCartPage implements OnInit {
       this.itemsExist = false;
     }
     await this.showAlert("Item has been removed from your cart.")
-    environment.inCart = this.items;
-    console.log(environment.inCart)
+    // environment.inCart = this.items;
+    // console.log(environment.inCart)
     this.router.navigateByUrl('store')
  }
 
@@ -110,7 +113,7 @@ export class MyCartPage implements OnInit {
     this.router.navigateByUrl('login');
   } else {
     for (var i=0; i < this.items.length; i++) {
-      (await (await this.appService.buyItem(this.items[i]['id'], environment.username)).toPromise()
+      (await (await this.appService.buyItem(this.items[i]['name'], environment.username)).toPromise()
       .then(result => {
         console.log(result)
         })

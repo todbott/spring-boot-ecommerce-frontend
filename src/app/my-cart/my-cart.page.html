@@ -26,7 +26,7 @@
     <ion-row *ngFor="let i of items">
         <ion-col>{{i.name}}</ion-col>
         <ion-col>${{i.price}}</ion-col>
-        <ion-col><ion-button (click)='removeFromCart(i.id)'>Remove</ion-button></ion-col>
+        <ion-col><ion-button (click)='removeFromCart(i.name, 1)'>Remove</ion-button></ion-col>
     </ion-row>
   </ion-grid>
 

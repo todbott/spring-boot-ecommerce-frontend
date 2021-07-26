@@ -41,13 +41,15 @@
         <ion-col>Info</ion-col>
         <ion-col>Add to cart</ion-col>
       </ion-row>
-      <ion-row *ngFor="let i of environment.filteredItemsAsKeyValue">
+      <ion-row *ngFor="let i of environment.filteredItemsAsKeyValue; let in = index">
         <ion-col><b>Name: </b>{{i.name}}
         <br><b>Info: </b>{{i.description}}
         <br><img src="data:image/png;base64,{{i.picture}}"></ion-col>
         <ion-col><b>Price: </b>{{i.price}}
         <br>
-        <br><ion-button (click)='addToCart(i.id)'>Add to cart</ion-button></ion-col>
+        <br><b>Quantity: </b> <ion-input type="text" [value]="1" [(ngModel)]="quantities[in]"></ion-input>
+        <ion-button (click)='addToCart(i.name, in)'>Add to cart</ion-button>
+        </ion-col>
         </ion-row>
     </ion-grid>
   </ng-container>

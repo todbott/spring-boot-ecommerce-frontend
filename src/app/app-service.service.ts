@@ -44,33 +44,36 @@ export class AppServiceService {
     return this.http.post(environment.apiUrl + '/demo/getOrders', body, { headers: headers, responseType: "json" })
   }
 
-  async buyItem(id, username) {
+  async buyItem(itemName, username) {
     let headers = new HttpHeaders();
     let body = new HttpParams();
-    body = body.set('itemId', id);
+    body = body.set('itemName', itemName);
     body = body.set('username', username);
     body = body.set('Authorization', environment.token)
     headers.append('Content-Type','application/json');
-    return this.http.post(environment.apiUrl + '/demo/buyItem', body, { headers: headers, params: body, observe: "response", responseType: "text" })
+    return this.http.get(environment.apiUrl + '/demo/buyItem', { headers: headers, params: body, observe: "response", responseType: "text" })
   }
 
-  async addItemToCart(id, username) {
+  async addItemToCart(id, username, quantity) {
     let headers = new HttpHeaders();
     let body = new HttpParams();
-    body = body.set('itemId', id);
+    body = body.set('itemName', id);
     body = body.set('username', username);
+    body = body.set('quantity', quantity);
     body = body.set('Authorization', environment.token)
     headers.append('Content-Type','application/json');
-    return this.http.post(environment.apiUrl + '/demo/addItemToCart', body, { headers: headers, params: body, observe: "response", responseType: "text" })
+    return this.http.get(environment.apiUrl + '/demo/addItemToCart', { headers: headers, params: body, observe: "response", responseType: "text" })
   }
 
-  async deleteItemFromCart(id) {
+  async deleteItemFromCart(itemName, username, quantity) {
     let headers = new HttpHeaders();
     let body = new HttpParams();
-    body = body.set('itemId', id);
+    body = body.set('username', username);
+    body = body.set('itemName', itemName);
+    body = body.set('quantity', quantity);
     body = body.set('Authorization', environment.token)
     headers.append('Content-Type','application/json');
-    return this.http.post(environment.apiUrl + '/demo/deleteItemFromCart', body, { headers: headers, params: body, observe: "response", responseType: "text" })
+    return this.http.get(environment.apiUrl + '/demo/deleteItemFromCart', { headers: headers, params: body, observe: "response", responseType: "text" })
   }
 
   async tryLogin(payload) {
@@ -81,17 +84,25 @@ export class AppServiceService {
 
   getItemsForDisplay() {
     environment.itemsAsKeyValue = []
+    let duplicates = []
     for (let key in environment.items) {
       let value = environment.items[key];
-      environment.itemsAsKeyValue.push(value)
+      if (duplicates.indexOf(value['name']) == -1) {
+        environment.itemsAsKeyValue.push(value)
+        duplicates.push(value['name'])
+      }
     }
   }
 
   getFilteredItemsForDisplay() {
     environment.filteredItemsAsKeyValue = []
+    let duplicates = []
     for (let key in environment.filteredItems) {
       let value = environment.filteredItems[key];
-      environment.filteredItemsAsKeyValue.push(value)
+      if (duplicates.indexOf(value['name']) == -1) {
+        environment.filteredItemsAsKeyValue.push(value)
+        duplicates.push(value['name'])
+      }
     }
   }
 
